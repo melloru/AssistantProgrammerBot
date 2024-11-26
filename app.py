@@ -17,11 +17,24 @@ bot = Bot(token=os.getenv('TOKEN'), default=DefaultBotProperties(parse_mode=Pars
 dp = Dispatcher()
 dp.include_router(user_private_router)
 
+async def on_startup(bot):
+    print("Бот запущен!")
+
+async def on_shutdown(bot):
+    print("Бот останавливается...")
+
 
 async def main():
+    dp.startup.register(on_startup)
+    dp.shutdown.register(on_shutdown)
+
     await bot.delete_webhook(drop_pending_updates=True)
     await bot.set_my_commands(commands=private, scope=types.BotCommandScopeAllPrivateChats())
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
 
+
 if __name__ == '__main__':
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except Exception as e:
+        print(str(e))
