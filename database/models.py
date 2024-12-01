@@ -12,7 +12,7 @@ class Student(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     student_tg_id: Mapped[int] = mapped_column(Integer, nullable=False, unique=True)
     # Связь с вопросами
-    questions: Mapped[list['Question']] = relationship("Question", back_populates="student", cascade='all')
+    questions: Mapped[list['Question']] = relationship('Question', back_populates='student', cascade='all')
     created_at: Mapped[DateTime] = mapped_column(DateTime, default=func.now())
 
 
@@ -24,5 +24,9 @@ class Question(Base):
     question_text: Mapped[str] = mapped_column(String(150))
     moderation: Mapped[bool] = mapped_column(nullable=True)
     # Связь с пользователем
-    student: Mapped[Student] = relationship("Student", back_populates="questions")
+    student: Mapped[Student] = relationship('Student', back_populates='questions')
     created_at: Mapped[DateTime] = mapped_column(DateTime, default=func.now())
+
+
+# Позже:
+# Добавить категории вопросов (Python, C, C++ и тд.)

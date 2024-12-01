@@ -1,7 +1,8 @@
-from sqlalchemy import select
+from sqlalchemy import select, delete
 
 from database.models import Question, Student
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from .engine import connection
 
 
@@ -34,8 +35,21 @@ async def orm_find_student(session: AsyncSession, student_tg_id: int):
 
 
 @connection
-async def orm_delete_question():
-    pass
+async def orm_get_student_questions(session: AsyncSession, student_tg_id: int):
+    query = (
+    select(Question)
+    .join(Student.questions)
+    .where(Student.student_tg_id == student_tg_id)
+)
+    questions = await session.execute(query)
+    return questions.scalars().all()
+
+
+@connection
+async def orm_delete_question(session: AsyncSession, question_id: int):
+    query = delete(Question).where(Question.id == question_id)
+    await session.execute(query)
+    await session.commit()
 
 
 @connection
