@@ -11,6 +11,7 @@ class Student(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     student_tg_id: Mapped[int] = mapped_column(Integer, nullable=False, unique=True)
+    username: Mapped[str] = mapped_column(String, nullable=True)
     # Связь с вопросами
     questions: Mapped[list['Question']] = relationship('Question', back_populates='student', cascade='all')
     created_at: Mapped[DateTime] = mapped_column(DateTime, default=func.now())
@@ -21,7 +22,9 @@ class Question(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     student_id: Mapped[int] = mapped_column(Integer, ForeignKey('students.id'))
-    question_text: Mapped[str] = mapped_column(String(150))
+    short_question: Mapped[str] = mapped_column(String(100))
+    full_question: Mapped[str] = mapped_column(String(300))
+    image: Mapped[str] = mapped_column(String(150), nullable=True)
     moderation: Mapped[bool] = mapped_column(nullable=True)
     # Связь с пользователем
     student: Mapped[Student] = relationship('Student', back_populates='questions')

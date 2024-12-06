@@ -2,6 +2,6 @@ from aiogram.types import BotCommand
 
 
 private = [
-    BotCommand(command='start', description='Запуск бота'),
-    BotCommand(command='cancel', description='Отменяет текущий сценарий'),
+    BotCommand(command='menu', description='Открыть меню'),
+    BotCommand(command='cancel', description='Отменить текущий сценарий'),
 ]

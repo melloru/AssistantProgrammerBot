@@ -19,9 +19,11 @@ async def orm_add_student(session: AsyncSession, student_tg_id: int):
 
 
 @connection
-async def orm_add_question(session: AsyncSession, question_text: str, student_id: Student):
+async def orm_add_question(session: AsyncSession, question_text: (str, str,), image: str, student_id: Student):
     obj = Question(
-        question_text=question_text,
+        short_question=question_text[0],
+        full_question=question_text[1],
+        image=image,
         student_id=student_id
     )
     session.add(obj)
@@ -53,5 +55,11 @@ async def orm_delete_question(session: AsyncSession, question_id: int):
 
 
 @connection
-async def orm_delete_student():
-    pass
+async def orm_get_questions(session: AsyncSession):
+    query = select(Question)
+    questions = await session.execute(query)
+    return questions.scalars().all()
+
+# @connection
+# async def orm_delete_student():
+#     pass

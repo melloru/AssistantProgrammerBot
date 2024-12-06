@@ -10,17 +10,29 @@ from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
 from common.bot_cmds_list import private
+from database.engine import create_db, drop_db
 from handlers.student import student_router
 from handlers.start import start_router
-from database.engine import create_db, drop_db
+from handlers.teacher import teacher_router
+from handlers.state_management import state_management_router
+
+# Для тестов
+from handlers.test import test_router
 
 
 bot = Bot(token=os.getenv('TOKEN'), default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 storage = MemoryStorage()
 
 dp = Dispatcher(storage=storage)
+
+# Для тестов
+dp.include_router(test_router)
+
+dp.include_router(state_management_router)
 dp.include_router(start_router)
 dp.include_router(student_router)
+dp.include_router(teacher_router)
+
 
 async def on_startup(bot):
     run_param = False
