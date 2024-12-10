@@ -73,8 +73,10 @@ def create_pagination_keyboard(page, total_pages, user_type, btns: dict = None, 
 
 start_kb = get_callback_btns(btns={
     'Ответить на вопрос': 'answer_',
-    'Задать вопрос': 'create_qstn_',
+    'Задать вопрос': 'create_question',
     'Помощь': 'help_',
     'Посмотреть мои вопросы': 'show_user_questions'},
     sizes=(2, 2)
 )
+
+change_question_kb = get_callback_btns(btns={'Продолжить': 'capture_question', 'Изменить': 'change_cur_question'})

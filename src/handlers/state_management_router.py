@@ -1,9 +1,8 @@
 from aiogram import Router, F, types
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
-from sqlalchemy.util import await_only
 
-from utils.user_operations import send_main_menu
+from ..services.message_service import MessageService
 
 
 state_management_router = Router()
@@ -21,4 +20,4 @@ async def cancel_handler(message: types.Message, state: FSMContext) -> None:
 
     await state.clear()
     await message.answer('Сценарий отменен')
-    await send_main_menu(message)
+    await MessageService.send_main_menu(message)

@@ -24,7 +24,7 @@ class Question(Base):
     student_id: Mapped[int] = mapped_column(Integer, ForeignKey('students.id'))
     short_question: Mapped[str] = mapped_column(String(100))
     full_question: Mapped[str] = mapped_column(String(300))
-    image: Mapped[str] = mapped_column(String(150), nullable=True)
+    image_question: Mapped[str] = mapped_column(String(150), nullable=True)
     moderation: Mapped[bool] = mapped_column(nullable=True)
     # Связь с пользователем
     student: Mapped[Student] = relationship('Student', back_populates='questions')

@@ -9,15 +9,15 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
-from common.bot_cmds_list import private
-from database.engine import create_db, drop_db
-from handlers.student import student_router
-from handlers.start import start_router
-from handlers.teacher import teacher_router
-from handlers.state_management import state_management_router
+from src.common.bot_cmds_list import private
+from src.database.engine import create_db, drop_db
+from src.handlers.student_router import student_router
+from src.handlers.start_router import start_router
+from src.handlers.teacher_router import teacher_router
+from src.handlers.state_management_router import state_management_router
 
 # Для тестов
-from handlers.test import test_router
+from src.handlers.test import test_router
 
 
 bot = Bot(token=os.getenv('TOKEN'), default=DefaultBotProperties(parse_mode=ParseMode.HTML))
@@ -40,11 +40,11 @@ async def on_startup(bot):
         await drop_db()
 
     await create_db()
-    print("Бот запущен!")
+    print('Бот запущен!')
 
 
 async def on_shutdown(bot):
-    print("Бот останавливается...")
+    print('Бот останавливается...')
 
 
 async def main():

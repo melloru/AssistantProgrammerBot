@@ -1,6 +1,6 @@
 from sqlalchemy import select, delete
 
-from database.models import Question, Student
+from src.database.models import Question, Student
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .engine import connection
@@ -19,11 +19,11 @@ async def orm_add_student(session: AsyncSession, student_tg_id: int):
 
 
 @connection
-async def orm_add_question(session: AsyncSession, question_text: (str, str,), image: str, student_id: Student):
+async def orm_add_question(session: AsyncSession, short_question: str, full_question: str, image_question: str, student_id: Student):
     obj = Question(
-        short_question=question_text[0],
-        full_question=question_text[1],
-        image=image,
+        short_question=short_question,
+        full_question=full_question,
+        image_question=image_question,
         student_id=student_id
     )
     session.add(obj)
